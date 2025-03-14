@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Button, Input, Textarea, Card, CardContent } from "@/components/ui";
 
+const API_URL = "https://podcast-generator-backend-epr8.onrender.com"; // Updated backend API URL
+
 export default function PodcastGenerator() {
   const [topic, setTopic] = useState("");
   const [script, setScript] = useState("");
@@ -13,7 +15,7 @@ export default function PodcastGenerator() {
     setScript("");
     setAudioUrl(null);
     try {
-      const response = await axios.post("/api/generate-script", { topic });
+      const response = await axios.post(`${API_URL}/api/generate-script`, { topic });
       setScript(response.data.script);
     } catch (error) {
       alert("Error generating script");
@@ -24,7 +26,7 @@ export default function PodcastGenerator() {
   const generateAudio = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("/api/generate-audio", { script });
+      const response = await axios.post(`${API_URL}/api/generate-audio`, { script });
       setAudioUrl(response.data.audioUrl);
     } catch (error) {
       alert("Error generating audio");
